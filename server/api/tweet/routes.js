@@ -10,6 +10,10 @@ class TweetRoutes {
     router
       .route('/tweets')
       .get([shapeQuery(TweetSchema), tweetController.getAll]);
+
+    router
+      .route('/tweets-user-delete/')
+      .post(auth, tweetController.removeAllTweets);
   }
 }
 

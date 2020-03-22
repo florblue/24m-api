@@ -44,6 +44,26 @@ class TweetController {
       next(error);
     }
   }
+
+
+  async removeAllTweets(req, res , next) {
+   try {
+      const user = req.body.user
+      if(!user) {
+        return res.status(404).send({
+          message: "User param is empty"
+        });
+      }  
+      const deleteResult = await TweetDAO.deleteAllByUser(req.body.user)
+      res.status(200).send({
+        message: `${deleteResult.quantity} ${req.body.user} tweets have been deleted.`,
+        status: deleteResult.status === 1
+      });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
 }
 
 module.exports = { TweetController };

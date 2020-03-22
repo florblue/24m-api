@@ -5,6 +5,13 @@ const moment = require("moment");
 
 const { TweetSchema } = require("./model");
 
+TweetSchema.statics.deleteAllByUser = async function deleteAllByUser(user) {
+ const deleteTweets = await this.model("Tweet").collection.deleteMany({'user.name': user});
+ return {
+   quantity: deleteTweets.result.n,
+   status: deleteTweets.result.ok
+ }
+}
 TweetSchema.statics.createNew = async function createNew(tweet) {
   const _tweet = new TweetDAO(tweet);
   const newTweet = await _tweet.save();
